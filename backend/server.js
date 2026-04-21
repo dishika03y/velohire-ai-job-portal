@@ -64,6 +64,10 @@ app.get("/api/user/get-recommended-jobs", Authenticate, async (req, res) => {
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+app.get("/", (req, res) => {
+  res.send("Backend is running 🚀");
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, async () => {
   await connectDB();
