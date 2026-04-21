@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Logo from "../ui/Logo";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { USER_API_END_POINT } from "@/utils/constant";
+import { USER_API_END_POINT } from "../../utils/constant";
 import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "@/redux/authSlice";

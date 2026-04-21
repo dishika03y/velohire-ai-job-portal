@@ -24,7 +24,6 @@ const CompanyCreate = () => {
   const navigate = useNavigate();
   const [companyName, setCompanyName] = useState("");
   const dispatch = useDispatch();
-
   const registerNewCompany = async () => {
     if (!companyName.trim()) {
       toast.error("Company name is required");

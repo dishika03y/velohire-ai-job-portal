@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import Logo from "../ui/Logo";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { USER_API_END_POINT } from "@/utils/constant";
+import { USER_API_END_POINT } from "../../utils/constant";
 import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoading, setUser } from "@/redux/authSlice";
+import { setLoading, setUser } from "../../redux/authSlice";
 import {
   Loader2,
   Mail,
@@ -72,8 +72,6 @@ const Login = () => {
 
   return (
     <div className="h-screen bg-[#F4F4F9] flex flex-col overflow-hidden selection:bg-indigo-500 selection:text-white">
-
-
       {/* Main container restricted to available height */}
       <main className="flex-1 flex items-center justify-center p-4 md:p-6 relative z-10 overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay pointer-events-none"></div>
