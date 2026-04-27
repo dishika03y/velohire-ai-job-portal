@@ -24,7 +24,7 @@ export const rankApplicants = async (req, res) => {
       return res.status(200).json([]);
     }
 
-    // 🔥 Prepare Applicant Data
+    // Prepare Applicant Data
     const applicantData = job.applications.map((app) => ({
       id: app.applicant._id.toString(),
       name: app.applicant.fullname,
@@ -46,7 +46,7 @@ export const rankApplicants = async (req, res) => {
     let scores = {};
 
     try {
-      // 🔥 Gemini Call (may fail)
+      // Gemini Call (may fail)
       const model = genAI.getGenerativeModel({
         model: "models/gemini-2.5-flash",
       });
@@ -65,7 +65,7 @@ export const rankApplicants = async (req, res) => {
         throw new Error("Invalid JSON from AI");
       }
     } catch (aiError) {
-      // 🔥 FALLBACK if Gemini fails
+      // FALLBACK if Gemini fails
       console.error("Gemini failed, using fallback:", aiError.message);
 
       job.applications.forEach((app) => {
@@ -73,7 +73,7 @@ export const rankApplicants = async (req, res) => {
       });
     }
 
-    // 🔥 Map results to frontend format
+    // Map results to frontend format
     const simplifiedRankings = job.applications.map((app) => {
       const userId = app.applicant._id.toString();
       return {

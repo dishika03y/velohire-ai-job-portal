@@ -52,7 +52,9 @@ app.get("/api/user/get-recommended-jobs", Authenticate, async (req, res) => {
     const response = await result.response;
     const recommendedIds = JSON.parse(response.text());
 
-    const recommended_jobs = await Job.find({ _id: { $in: recommendedIds } });
+    const recommended_jobs = await Job.find({
+      skills: { $in: user.profile.skills },
+    }).limit(3); // Fallback to DB query if AI fails
     res.status(200).json({ recommended_jobs });
   } catch (error) {
     res

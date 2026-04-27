@@ -15,10 +15,16 @@ export const applyJob = async (req, res) => {
     }
 
     // 1. Logic Check: Has user applied before?
-    const existingApplication = await Application.findOne({
-      job: jobId,
-      applicant: userId,
-    });
+    const existingApplication = await Application.findOne(
+      {
+        job: jobId,
+        applicant: userId,
+      },
+      {
+        // We only need to _id to check existence, no need to fetch full data
+        _id: 1,
+      },
+    );
     if (existingApplication) {
       return res.status(400).json({
         message: "You have already applied for this job",
@@ -27,7 +33,10 @@ export const applyJob = async (req, res) => {
     }
 
     // 2. Logic Check: Does the job exist?
-    const job = await Job.findById(jobId);
+    const job = await Job.findById(jobId, {
+      // We only need the _id to create the application, no need to fetch full data
+      _id: 1,
+    });
     if (!job) {
       return res.status(404).json({ message: "Job not found", success: false });
     }
@@ -39,7 +48,7 @@ export const applyJob = async (req, res) => {
     });
 
     // 4. SYNC LOGIC: Update the Job's applications array
-    // This ensures that job.populate('applications') works on the frontend
+    // This ensures that job.populate('applications') works on the frontend\
     job.applications.push(newApplication._id);
     await job.save();
 
@@ -58,7 +67,14 @@ export const getAppliedJobs = async (req, res) => {
   try {
     const userId = req.id;
     // We find all applications by this user and populate the nested job and company details
-    const applications = await Application.find({ applicant: userId })
+    const applications = await Application.find(
+      { applicant: userId },
+      {
+        // We only need the _id and status for the application, no need to fetch full data
+        _id: 1,
+        status: 1,
+      },
+    )
       .sort({ createdAt: -1 })
       .populate({
         path: "job",
