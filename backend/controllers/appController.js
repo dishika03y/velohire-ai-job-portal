@@ -47,11 +47,6 @@ export const applyJob = async (req, res) => {
       applicant: userId,
     });
 
-    // 4. SYNC LOGIC: Update the Job's applications array
-    // This ensures that job.populate('applications') works on the frontend\
-    job.applications.push(newApplication._id);
-    await job.save();
-
     return res
       .status(201)
       .json({ message: "Job applied successfully.", success: true });
